@@ -1,0 +1,9 @@
+
+  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ██    ██  ████████  ███████    ██████  ████████  ████████  ███████
+  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ██    ██     ██     ██    ██  ██          ██     ██        ██    ██
+  ${AnsiColor.GREEN}      ██ ${AnsiColor.RED} ████████     ██     ███████    █████      ██     ██████    ███████
+  ${AnsiColor.GREEN}██    ██ ${AnsiColor.RED} ██    ██     ██     ██             ██     ██     ██        ██   ██
+  ${AnsiColor.GREEN} ██████  ${AnsiColor.RED} ██    ██  ████████  ██        ██████      ██     ████████  ██    ██
+
+${AnsiColor.BRIGHT_BLUE}:: JHipster Dashboard ::
+:: http://jhipster.github.io ::${AnsiColor.DEFAULT}
