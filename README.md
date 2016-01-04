@@ -20,6 +20,15 @@ This is a proof of concept of using JHipster in a microservices architecture, us
 - __JHiDashboard__ is a monitoring dashboard, based on Netflix Turbine
 - __app1__ is a JHipster application, which registers itself to JHiRegistry
 
+## How to use it
+
+Run `mvn` on each project to get them running.
+
+- JHiRouter and app1 will register themselves to JHiRegistry
+- JHiRouter will route requests to `/api/foos` to app1 (you will get security issues, see what's missing below)
+
+You can also run several app1 instances by changing their Spring Boot `server.port` property, and you will see them in JHiRegistry.
+
 ## What is missing
 
 - Security: this must be done using OAuth2 at least. If this is done with an OAuth2 server, it will be with the Spring Security implementation, and will be called JHiSecurity
