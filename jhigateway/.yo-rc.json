@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "jhirouter",
+    "packageName": "io.github.jhipster.gateway",
+    "packageFolder": "io/github/jhipster/gateway",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useSass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "edc287a4796b99146592a0ae687ea3af6739b359",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}
