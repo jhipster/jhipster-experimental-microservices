@@ -1,0 +1,22 @@
+{
+    "jhigatewayApp": {
+        "foo" : {
+            "home": {
+                "title": "Foos",
+                "createLabel": "Créer un nouveau Foo",
+                "createOrEditLabel": "Créer ou éditer un Foo"
+            },
+            "created": "Un nouveau Foo a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Foo avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Foo avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Foo {{ id }} ?"
+            },
+            "detail": {
+                "title": "Foo"
+            },
+            "aaa": "Aaa"
+        }
+    }
+}
+

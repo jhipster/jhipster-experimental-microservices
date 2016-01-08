@@ -14,8 +14,8 @@
 eureka:
     instance:
         appname: app1
-        metadataMap:
-            instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        #metadataMap:
+        #    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     client:
         enabled: true
         healthcheck:

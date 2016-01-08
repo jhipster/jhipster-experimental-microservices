@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .controller('AuditsController', function ($scope, $filter, AuditsService) {
         $scope.onChangeDate = function () {
             var dateFormat = 'yyyy-MM-dd';

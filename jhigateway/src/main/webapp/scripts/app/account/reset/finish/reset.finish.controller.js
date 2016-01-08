@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .controller('ResetFinishController', function ($scope, $stateParams, $timeout, Auth) {
 
         $scope.keyMissing = $stateParams.key === undefined;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .controller('RequestResetController', function ($rootScope, $scope, $state, $timeout, Auth) {
 
         $scope.success = null;

@@ -204,7 +204,7 @@ public class JHipsterProperties {
 
     public static class Mail {
 
-        private String from = "jhirouter@localhost";
+        private String from = "jhigateway@localhost";
 
         public String getFrom() {
             return from;
@@ -240,9 +240,9 @@ public class JHipsterProperties {
 
     public static class Swagger {
 
-        private String title = "jhirouter API";
+        private String title = "jhigateway API";
 
-        private String description = "jhirouter API documentation";
+        private String description = "jhigateway API documentation";
 
         private String version = "0.0.1";
 
@@ -385,7 +385,7 @@ public class JHipsterProperties {
 
             private int port = 2003;
 
-            private String prefix = "jhirouter";
+            private String prefix = "jhigateway";
 
             public boolean isEnabled() {
                 return enabled;

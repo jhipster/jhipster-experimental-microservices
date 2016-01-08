@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .controller('RegisterController', function ($scope, $translate, $timeout, Auth) {
         $scope.success = null;
         $scope.error = null;

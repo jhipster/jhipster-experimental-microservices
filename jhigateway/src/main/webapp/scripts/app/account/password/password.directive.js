@@ -1,7 +1,7 @@
 /* globals $ */
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .directive('passwordStrengthBar', function () {
         return {
             replace: true,

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .factory('Register', function ($resource) {
         return $resource('api/register', {}, {
         });

@@ -2,7 +2,7 @@
 
 describe('Controllers Tests ', function () {
 
-    beforeEach(module('jhirouterApp'));
+    beforeEach(module('jhigatewayApp'));
 
     describe('LoginController', function () {
         var $scope;

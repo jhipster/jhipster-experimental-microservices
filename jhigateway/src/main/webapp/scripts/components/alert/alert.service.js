@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .provider('AlertService', function () {
         this.toast = false;
 
@@ -19,7 +19,7 @@ angular.module('jhirouterApp')
                 info: info,
                 warning : warning
             },
-            
+
             toast = this.toast,
             alertId = 0, // unique id for each alert. Starts from 0.
             alerts = [],

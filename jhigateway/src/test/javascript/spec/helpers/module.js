@@ -1,4 +1,4 @@
-beforeEach(module('jhirouterApp'));
+beforeEach(module('jhigatewayApp'));
 /**
  * returns a function whose angular will be replaced
  * with whatever mock was supplied.

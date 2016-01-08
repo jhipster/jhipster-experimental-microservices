@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp').controller('UserManagementDialogController',
+angular.module('jhigatewayApp').controller('UserManagementDialogController',
     ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'User', 'Language',
         function($scope, $stateParams, $uibModalInstance, entity, User, Language) {
 

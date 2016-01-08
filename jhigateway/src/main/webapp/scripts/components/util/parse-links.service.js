@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .service('ParseLinks', function () {
         this.parse = function (header) {
             if (header.length == 0) {

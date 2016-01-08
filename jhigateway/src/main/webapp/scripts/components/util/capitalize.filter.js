@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .filter('capitalize', function () {
         return function (input, scope) {
             if (input != null)

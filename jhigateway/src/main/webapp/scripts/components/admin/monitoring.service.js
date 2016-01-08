@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .factory('MonitoringService', function ($rootScope, $http) {
         return {
             getMetrics: function () {

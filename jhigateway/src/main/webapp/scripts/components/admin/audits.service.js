@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .factory('AuditsService', function ($http) {
         return {
             findAll: function () {

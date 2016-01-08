@@ -37,7 +37,7 @@ public class Application {
     private Environment env;
 
     /**
-     * Initializes jhirouter.
+     * Initializes jhigateway.
      * <p/>
      * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
      * <p/>

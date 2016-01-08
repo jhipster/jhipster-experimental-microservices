@@ -14,8 +14,6 @@
 eureka:
     instance:
         appname: gateway
-        metadataMap:
-            instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     client:
         enabled: true
         healthcheck:
@@ -26,13 +24,10 @@ eureka:
             defaultZone: http://localhost:8761/eureka/
 
 zuul:
+    ignoredServices: '*'
     routes:
         app1:
-            path: /api/foos/**
-        #    url: http://127.0.0.1:8090/api/foos/
-        app2:
-            path: /api/bars/**
-
+            path: /app1/**
 
 ribbon:
     eureka:

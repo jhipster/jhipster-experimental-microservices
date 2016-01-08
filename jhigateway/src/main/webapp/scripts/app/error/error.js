@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('jhirouterApp')
+angular.module('jhigatewayApp')
     .config(function ($stateProvider) {
         $stateProvider
             .state('error', {

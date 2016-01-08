@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>io.github.jhipster</groupId>
-    <artifactId>jhirouter</artifactId>
+    <artifactId>jhigateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>jhirouter</name>
