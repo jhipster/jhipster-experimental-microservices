@@ -14,6 +14,7 @@
 eureka:
     instance:
         appname: gateway
+        instanceId: gateway:${spring.application.instance_id:${random.value}}
     client:
         enabled: true
         healthcheck:
