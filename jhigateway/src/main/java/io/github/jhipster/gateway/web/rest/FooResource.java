@@ -26,10 +26,10 @@ import java.util.Optional;
 public class FooResource {
 
     private final Logger log = LoggerFactory.getLogger(FooResource.class);
-        
+
     @Inject
     private FooRepository fooRepository;
-    
+
     /**
      * POST  /foos -> Create a new foo.
      */
@@ -76,7 +76,7 @@ public class FooResource {
     public List<Foo> getAllFoos() {
         log.debug("REST request to get all Foos");
         return fooRepository.findAll();
-            }
+    }
 
     /**
      * GET  /foos/:id -> get the "id" foo.
