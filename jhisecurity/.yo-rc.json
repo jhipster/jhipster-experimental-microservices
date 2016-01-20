@@ -1,0 +1,22 @@
+{
+  "generator-jhipster": {
+    "baseName": "jhisecurity",
+    "packageName": "io.github.jhipster.security",
+    "packageFolder": "io/github/jhipster/security",
+    "authenticationType": "oauth2",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useSass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "b67a8916fd0a5d9b67d09b1dcc66230139097d64",
+    "testFrameworks": []
+  }
+}
