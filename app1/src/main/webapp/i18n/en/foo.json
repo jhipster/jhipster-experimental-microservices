@@ -4,7 +4,8 @@
             "home": {
                 "title": "Foos",
                 "createLabel": "Create a new Foo",
-                "createOrEditLabel": "Create or edit a Foo"
+                "createOrEditLabel": "Create or edit a Foo",
+                "search": "Search for Foo"
             },
             "created": "A new Foo is created with identifier {{ param }}",
             "updated": "A Foo is updated with identifier {{ param }}",

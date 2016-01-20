@@ -22,6 +22,8 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="aaa" type="varchar(255)"/>
+            
+            <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
     </changeSet>

@@ -21,7 +21,7 @@ public class Foo implements Serializable {
 
     @Column(name = "aaa")
     private String aaa;
-
+    
     public Long getId() {
         return id;
     }
@@ -33,7 +33,7 @@ public class Foo implements Serializable {
     public String getAaa() {
         return aaa;
     }
-
+    
     public void setAaa(String aaa) {
         this.aaa = aaa;
     }
@@ -47,6 +47,9 @@ public class Foo implements Serializable {
             return false;
         }
         Foo foo = (Foo) o;
+        if(foo.id == null || id == null) {
+            return false;
+        }
         return Objects.equals(id, foo.id);
     }
 
