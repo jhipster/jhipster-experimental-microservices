@@ -15,6 +15,7 @@ eureka:
     instance:
         appname: gateway
         instanceId: gateway:${spring.application.instance_id:${random.value}}
+        prefer-ip-address: true
     client:
         enabled: true
         healthcheck:
@@ -25,10 +26,6 @@ eureka:
             defaultZone: http://localhost:8761/eureka/
 
 zuul:
-    ignoredServices: '*'
-    routes:
-        app1:
-            path: /app1/**
 
 ribbon:
     eureka:

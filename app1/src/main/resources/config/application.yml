@@ -15,6 +15,7 @@ eureka:
     instance:
         appname: app1
         instanceId: app1:${spring.application.instance_id:${random.value}}
+        prefer-ip-address: true
     client:
         enabled: true
         healthcheck:
