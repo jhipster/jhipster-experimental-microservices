@@ -3,7 +3,7 @@
     "baseName": "app1",
     "packageName": "com.mycompany.myapp",
     "packageFolder": "com/mycompany/myapp",
-    "authenticationType": "session",
+    "authenticationType": "oauth2",
     "hibernateCache": "ehcache",
     "clusteredHttpSession": "no",
     "websocket": "no",

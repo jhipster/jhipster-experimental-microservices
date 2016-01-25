@@ -80,19 +80,6 @@
 
         <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
 
-        <createTable tableName="jhi_persistent_token">
-            <column name="series" type="varchar(255)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="user_id" type="bigint"/>
-            <column name="token_value" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="token_date" type="date"/>
-            <column name="ip_address" type="varchar(39)"/>
-            <column name="user_agent" type="varchar(255)"/>
-        </createTable>
-
         <addForeignKeyConstraint baseColumnNames="authority_name"
                                  baseTableName="jhi_user_authority"
                                  constraintName="fk_authority_name"
@@ -102,12 +89,6 @@
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="jhi_user_authority"
                                  constraintName="fk_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="jhi_persistent_token"
-                                 constraintName="fk_user_persistent_token"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
@@ -173,4 +154,73 @@
     
     </changeSet>
     
+    <!-- Manage the OAuth authentication -->
+    <changeSet id="2" author="jhipster">
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="resource_ids" type="varchar(255)"/>
+            <column name="client_secret" type="varchar(255)"/>
+            <column name="scope" type="varchar(255)"/>
+            <column name="authorized_grant_types" type="varchar(255)"/>
+            <column name="web_server_redirect_uri" type="varchar(255)"/>
+            <column name="authorities" type="varchar(255)"/>
+            <column name="access_token_validity" type="INT"/>
+            <column name="refresh_token_validity" type="INT"/>
+            <column name="additional_information" type="VARCHAR(4096)"/>
+            <column name="autoapprove" type="VARCHAR(4096)"/>
+        </createTable>
+
+        <createTable tableName="oauth_client_token">
+            <column name="token_id" type="varchar(255)"/>
+            <column name="token" type="BLOB"/>
+            <column name="authentication_id" type="varchar(255)"/>
+            <column name="user_name" type="varchar(255)"/>
+            <column name="client_id" type="varchar(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_name"
+            baseTableName="oauth_client_token"
+            constraintName="fk_oauth_client_tokn_user_name"
+            referencedColumnNames="login"
+            referencedTableName="jhi_user"/>
+
+        <createTable tableName="oauth_access_token">
+            <column name="token_id" type="varchar(255)"/>
+            <column name="token" type="BLOB"/>
+            <column name="authentication_id" type="varchar(255)">
+                 <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_name" type="varchar(255)"/>
+            <column name="client_id" type="varchar(255)"/>
+            <column name="authentication" type="BLOB"/>
+            <column name="refresh_token" type="varchar(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_name"
+            baseTableName="oauth_access_token"
+            constraintName="fk_oauth_access_tokn_user_name"
+            referencedColumnNames="login"
+            referencedTableName="jhi_user"/>
+
+        <createTable tableName="oauth_refresh_token">
+            <column name="token_id" type="varchar(255)"/>
+            <column name="token" type="BLOB"/>
+            <column name="authentication" type="BLOB"/>
+        </createTable>
+
+        <createTable tableName="oauth_code">
+            <column name="code" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="oauth_approvals">
+            <column name="userId" type="varchar(255)"/>
+            <column name="clientId" type="varchar(255)"/>
+            <column name="scope" type="varchar(255)"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="expiresAt" type="timestamp"/>
+            <column name="lastModifiedAt" type="timestamp"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

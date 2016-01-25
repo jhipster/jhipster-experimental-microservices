@@ -2,9 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.mycompany.myapp.domain.Authority;
-import com.mycompany.myapp.domain.PersistentToken;
 import com.mycompany.myapp.domain.User;
-import com.mycompany.myapp.repository.PersistentTokenRepository;
 import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.MailService;
@@ -42,9 +40,6 @@ public class AccountResource {
 
     @Inject
     private UserService userService;
-
-    @Inject
-    private PersistentTokenRepository persistentTokenRepository;
 
     @Inject
     private MailService mailService;
@@ -151,46 +146,6 @@ public class AccountResource {
         }
         userService.changePassword(password);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    /**
-     * GET  /account/sessions -> get the current open sessions.
-     */
-    @RequestMapping(value = "/account/sessions",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<PersistentToken>> getCurrentSessions() {
-        return userRepository.findOneByLogin(SecurityUtils.getCurrentUser().getUsername())
-            .map(user -> new ResponseEntity<>(
-                persistentTokenRepository.findByUser(user),
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-    }
-
-    /**
-     * DELETE  /account/sessions?series={series} -> invalidate an existing session.
-     *
-     * - You can only delete your own sessions, not any other user's session
-     * - If you delete one of your existing sessions, and that you are currently logged in on that session, you will
-     *   still be able to use that session, until you quit your browser: it does not work in real time (there is
-     *   no API for that), it only removes the "remember me" cookie
-     * - This is also true if you invalidate your current session: you will still be able to use it until you close
-     *   your browser or that the session times out. But automatic login (the "remember me" cookie) will not work
-     *   anymore.
-     *   There is an API to invalidate the current session, but there is no API to check which session uses which
-     *   cookie.
-     */
-    @RequestMapping(value = "/account/sessions/{series}",
-        method = RequestMethod.DELETE)
-    @Timed
-    public void invalidateSession(@PathVariable String series) throws UnsupportedEncodingException {
-        String decodedSeries = URLDecoder.decode(series, "UTF-8");
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUser().getUsername()).ifPresent(u -> {
-            persistentTokenRepository.findByUser(u).stream()
-                .filter(persistentToken -> StringUtils.equals(persistentToken.getSeries(), decodedSeries))
-                .findAny().ifPresent(t -> persistentTokenRepository.delete(decodedSeries));
-        });
     }
 
     @RequestMapping(value = "/account/reset_password/init",
