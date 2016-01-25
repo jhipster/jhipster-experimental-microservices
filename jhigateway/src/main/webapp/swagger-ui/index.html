@@ -29,24 +29,6 @@
 
     <script type="text/javascript">
         $(function () {
-
-            //Get the swagger endpoints for all the microservices indexed by the gateway
-            var swaggerAPINames = [];
-            var swaggerAPIURLs = [];
-            $.get("http://127.0.0.1:8080/api/gateway/routes",function(gatewayRoutes){
-                gatewayRoutes.forEach(function(route){
-                    swaggerAPINames.push(route.serviceId);
-                    swaggerAPIURLs.push(window.location.origin+route.path.replace("**","v2/api-docs"));
-                });
-
-                //Add the swagger endpoints retrieved to the select box
-                for(var i=0; i < swaggerAPINames.length; i++) {
-                    var option = $("<option>", {value: swaggerAPIURLs[i]});
-                    option.append(swaggerAPINames[i]);
-                    $("#api-select").append(option);
-                }
-            });
-
             var url = "/v2/api-docs";
 
             // Pre load translate...
@@ -88,9 +70,6 @@
 
                 var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-CSRF-TOKEN", getCSRF(), "header");
                 window.swaggerUi.api.clientAuthorizations.add("key", apiKeyAuth);
-
-
-
             }
 
             function getCSRF() {
@@ -114,6 +93,31 @@
                 }
             }
         });
+
+        //Get the swagger endpoints for all the microservices indexed by the gateway
+        var swaggerAPIs = [];
+        swaggerAPIs.push({
+            name: "Gateway",
+            path: "",
+            url: "http://127.0.0.1:8080/v2/api-docs"
+        });
+        $.get("http://127.0.0.1:8080/api/gateway/routes",function(gatewayRoutes){
+            gatewayRoutes.forEach(function(route){
+                swaggerAPIs.push({
+                    name: route.serviceId,
+                    path: route.path,
+                    url: window.location.origin+route.path.replace("**","v2/api-docs")
+                });
+            });
+
+            var i = 0;
+            swaggerAPIs.forEach(function(swaggerAPI){
+                var option = $("<option>", {value: i});
+                option.append(swaggerAPI.name);
+                $("#api-select").append(option);
+                i++;
+            });
+        });
     </script>
 </head>
 
@@ -121,21 +125,28 @@
 <div id='header'>
     <div class="swagger-ui-wrap">
         <a id="logo" href="http://swagger.io">swagger</a>
-        <select id="api-select" name="APIs">
-            <option value="http://127.0.0.1:8080/v2/api-docs" selected>Gateway</option>
-        </select>
+        <select id="api-select" name="APIs"></select>
     </div>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 <script>
-    //Allow switching of among available swagger API with the select box
+    //Allow switching between available swagger API with the select box
     $("#api-select").change(function(){
-        console.log("Switching to: "+$(this).val());
+        var endpointIndex = $(this).val();
+        //var swaggerEndpointName = swaggerAPIs[endpointIndex].name;
+        var swaggerEndpointPath = swaggerAPIs[endpointIndex].path;
+        var swaggerEndpointURL = swaggerAPIs[endpointIndex].url;
+
+        //Reload swagger with a different endpoint URL and a different "base path"
+        // so that Swagger API calls are made through the gateway with the correct path
         window.swaggerUi = new SwaggerUi({
-            url: $(this).val(),
-            dom_id: "swagger-ui-container"
+            url: swaggerEndpointURL,
+            dom_id: "swagger-ui-container",
+            onComplete: function(){
+                window.swaggerUi.api.setBasePath(swaggerEndpointPath.replace("/**",""));
+            }
         });
         window.swaggerUi.load();
     });
