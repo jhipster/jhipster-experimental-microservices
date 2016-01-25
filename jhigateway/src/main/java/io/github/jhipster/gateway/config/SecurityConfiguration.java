@@ -2,6 +2,8 @@ package io.github.jhipster.gateway.config;
 
 import io.github.jhipster.gateway.security.*;
 import io.github.jhipster.gateway.web.filter.CsrfCookieGeneratorFilter;
+
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -22,6 +24,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import javax.inject.Inject;
 
 @Configuration
+@EnableOAuth2Sso
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

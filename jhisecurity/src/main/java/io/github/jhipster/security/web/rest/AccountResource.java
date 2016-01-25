@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -109,6 +110,14 @@ public class AccountResource {
         return Optional.ofNullable(userService.getUserWithAuthorities())
             .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    /**
+     * Get a Spring Security Principal, used for OAuth2 SSO authentication.
+     */
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
     }
 
     /**

@@ -32,6 +32,7 @@ ribbon:
         enabled: true
 
 spring:
+    name: gateway
     jpa:
         open-in-view: false
         hibernate:
@@ -44,6 +45,18 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    oauth2:
+        sso:
+            home:
+                secure: false
+                path: /,/**/*.html
+        client:
+            accessTokenUri: http://localhost:8762/oauth/token
+            userAuthorizationUri: http://localhost:8762/oauth/authorize
+            clientId: jhisecurityapp
+            clientSecret: mySecretOAuthSecret
+        resource:
+            userInfoUri: http://localhost:8762/user
 
 security:
     basic:
