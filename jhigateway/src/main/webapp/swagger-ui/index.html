@@ -29,6 +29,24 @@
 
     <script type="text/javascript">
         $(function () {
+
+            //Get the swagger endpoints for all the microservices indexed by the gateway
+            var swaggerAPINames = [];
+            var swaggerAPIURLs = [];
+            $.get("http://127.0.0.1:8080/api/gateway/routes",function(gatewayRoutes){
+                gatewayRoutes.forEach(function(route){
+                    swaggerAPINames.push(route.serviceId);
+                    swaggerAPIURLs.push(window.location.origin+route.path.replace("**","v2/api-docs"));
+                });
+
+                //Add the swagger endpoints retrieved to the select box
+                for(var i=0; i < swaggerAPINames.length; i++) {
+                    var option = $("<option>", {value: swaggerAPIURLs[i]});
+                    option.append(swaggerAPINames[i]);
+                    $("#api-select").append(option);
+                }
+            });
+
             var url = "/v2/api-docs";
 
             // Pre load translate...
@@ -67,12 +85,12 @@
             });
 
             function addApiKeyAuthorization(){
-            
+
                 var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-CSRF-TOKEN", getCSRF(), "header");
                 window.swaggerUi.api.clientAuthorizations.add("key", apiKeyAuth);
-            
-            
-            
+
+
+
             }
 
             function getCSRF() {
@@ -103,10 +121,24 @@
 <div id='header'>
     <div class="swagger-ui-wrap">
         <a id="logo" href="http://swagger.io">swagger</a>
+        <select id="api-select" name="APIs">
+            <option value="http://127.0.0.1:8080/v2/api-docs" selected>Gateway</option>
+        </select>
     </div>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<script>
+    //Allow switching of among available swagger API with the select box
+    $("#api-select").change(function(){
+        console.log("Switching to: "+$(this).val());
+        window.swaggerUi = new SwaggerUi({
+            url: $(this).val(),
+            dom_id: "swagger-ui-container"
+        });
+        window.swaggerUi.load();
+    });
+</script>
 </body>
 </html>
