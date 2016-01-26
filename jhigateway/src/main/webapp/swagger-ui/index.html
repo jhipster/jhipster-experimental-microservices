@@ -94,14 +94,16 @@
             }
         });
 
+        var gatewayURL = window.location.origin;
+
         //Get the swagger endpoints for all the microservices indexed by the gateway
         var swaggerAPIs = [];
         swaggerAPIs.push({
             name: "Gateway",
             path: "",
-            url: "http://127.0.0.1:8080/v2/api-docs"
+            url: gatewayURL + "/v2/api-docs"
         });
-        $.get("http://127.0.0.1:8080/api/gateway/routes",function(gatewayRoutes){
+        $.get(gatewayURL + "/api/gateway/routes",function(gatewayRoutes){
             gatewayRoutes.forEach(function(route){
                 swaggerAPIs.push({
                     name: route.serviceId,
@@ -133,9 +135,9 @@
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 <script>
     //Allow switching between available swagger API with the select box
+    //FIXME If the is Gateway API is re-selected, swagger API calls will not work because of CSRF protection
     $("#api-select").change(function(){
         var endpointIndex = $(this).val();
-        //var swaggerEndpointName = swaggerAPIs[endpointIndex].name;
         var swaggerEndpointPath = swaggerAPIs[endpointIndex].path;
         var swaggerEndpointURL = swaggerAPIs[endpointIndex].url;
 
@@ -144,8 +146,8 @@
         window.swaggerUi = new SwaggerUi({
             url: swaggerEndpointURL,
             dom_id: "swagger-ui-container",
-            onComplete: function(){
-                window.swaggerUi.api.setBasePath(swaggerEndpointPath.replace("/**",""));
+            onComplete: function () {
+                window.swaggerUi.api.setBasePath(swaggerEndpointPath.replace("/**", ""));
             }
         });
         window.swaggerUi.load();
