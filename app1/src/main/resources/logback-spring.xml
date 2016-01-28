@@ -29,7 +29,7 @@
         <appender-ref ref="SYSLOG"/>
     </appender>
 
-    <logger name="io.github.jhipster.gateway" level="@logback.loglevel@"/>
+    <logger name="com.mycompany.myapp" level="@logback.loglevel@"/>
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>
