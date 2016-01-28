@@ -32,7 +32,8 @@ ribbon:
         enabled: true
 
 spring:
-    name: gateway
+    application:
+        name: gateway
     jpa:
         open-in-view: false
         hibernate:
@@ -51,12 +52,12 @@ spring:
                 secure: false
                 path: /,/**/*.html
         client:
-            accessTokenUri: http://localhost:8762/oauth/token
-            userAuthorizationUri: http://localhost:8762/oauth/authorize
+            accessTokenUri: http://localhost:9999/uaa/oauth/token
+            userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
             clientId: jhisecurityapp
             clientSecret: mySecretOAuthSecret
         resource:
-            userInfoUri: http://localhost:8762/user
+            userInfoUri: http://localhost:9999/uaa/api/user
 
 security:
     basic:

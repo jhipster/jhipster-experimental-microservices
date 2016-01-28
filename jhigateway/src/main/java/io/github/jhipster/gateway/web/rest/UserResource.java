@@ -74,44 +74,6 @@ public class UserResource {
     private UserService userService;
 
     /**
-     * POST  /users -> Creates a new user.
-     * <p>
-     * Creates a new user if the login and email are not already used, and sends an
-     * mail with an activation link.
-     * The user needs to be activated on creation.
-     * </p>
-     */
-    @RequestMapping(value = "/users",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<?> createUser(@RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
-        log.debug("REST request to save User : {}", managedUserDTO);
-        if (userRepository.findOneByLogin(managedUserDTO.getLogin()).isPresent()) {
-            return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("user-management", "userexists", "Login already in use"))
-                .body(null);
-        } else if (userRepository.findOneByEmail(managedUserDTO.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use"))
-                .body(null);
-        } else {
-            User newUser = userService.createUser(managedUserDTO);
-            String baseUrl = request.getScheme() + // "http"
-            "://" +                                // "://"
-            request.getServerName() +              // "myhost"
-            ":" +                                  // ":"
-            request.getServerPort() +              // "80"
-            request.getContextPath();              // "/myContextPath" or "" if deployed in root context
-            mailService.sendCreationEmail(newUser, baseUrl);
-            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert( "user-management.created", newUser.getLogin()))
-                .body(newUser);
-        }
-    }
-
-    /**
      * PUT  /users -> Updates an existing User.
      */
     @RequestMapping(value = "/users",

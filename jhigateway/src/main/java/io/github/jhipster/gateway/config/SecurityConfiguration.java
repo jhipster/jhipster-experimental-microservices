@@ -25,42 +25,8 @@ import javax.inject.Inject;
 
 @Configuration
 @EnableOAuth2Sso
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Inject
-    private Environment env;
-
-    @Inject
-    private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
-
-    @Inject
-    private AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler;
-
-    @Inject
-    private AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler;
-
-    @Inject
-    private Http401UnauthorizedEntryPoint authenticationEntryPoint;
-
-    @Inject
-    private UserDetailsService userDetailsService;
-
-    @Inject
-    private RememberMeServices rememberMeServices;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Inject
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -82,26 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
             .accessDeniedHandler(new CustomAccessDeniedHandler())
-            .authenticationEntryPoint(authenticationEntryPoint)
-        .and()
-            .rememberMe()
-            .rememberMeServices(rememberMeServices)
-            .rememberMeParameter("remember-me")
-            .key(env.getProperty("jhipster.security.rememberme.key"))
-        .and()
-            .formLogin()
-            .loginProcessingUrl("/api/authentication")
-            .successHandler(ajaxAuthenticationSuccessHandler)
-            .failureHandler(ajaxAuthenticationFailureHandler)
-            .usernameParameter("j_username")
-            .passwordParameter("j_password")
-            .permitAll()
-        .and()
-            .logout()
-            .logoutUrl("/api/logout")
-            .logoutSuccessHandler(ajaxLogoutSuccessHandler)
-            .deleteCookies("JSESSIONID", "CSRF-TOKEN")
-            .permitAll()
         .and()
             .headers()
             .frameOptions()
@@ -118,13 +64,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/gateway/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            //.antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/dump/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/shutdown/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/beans/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/configprops/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            //.antMatchers("/info/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/info/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/autoconfig/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
