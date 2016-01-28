@@ -3,7 +3,7 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-<!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
+<!-- The FILE appender is here as an example for a production configuration -->
 <!--
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -14,13 +14,20 @@
             <charset>utf-8</charset>
             <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
         </encoder>
+    </appender>-->
+
+    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>localhost</syslogHost>
+        <port>5000</port>
+        <facility>AUTH</facility>
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
         <queueSize>512</queueSize>
-        <appender-ref ref="FILE"/>
+        <!--Set this in order to override the default behavior that discard non-WARN events when the queue is filling up
+        <discardingThreshold>0</discardingThreshold>-->
+        <appender-ref ref="SYSLOG"/>
     </appender>
--->
 
     <logger name="io.github.jhipster.gateway" level="@logback.loglevel@"/>
 
@@ -56,7 +63,8 @@
     </contextListener>
 
     <root level="@logback.loglevel@">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC" />
+        <!--<appender-ref ref="CONSOLE"/>-->
     </root>
 
 </configuration>
