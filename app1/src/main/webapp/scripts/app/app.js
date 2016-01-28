@@ -74,10 +74,6 @@ angular.module('app1App', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalpre
         // uncomment below to make alerts look like toast
         //AlertServiceProvider.showAsToast(true);
 
-        //enable CSRF
-        $httpProvider.defaults.xsrfCookieName = 'CSRF-TOKEN';
-        $httpProvider.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
-
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
@@ -104,6 +100,7 @@ angular.module('app1App', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalpre
 
         $httpProvider.interceptors.push('errorHandlerInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
+        $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');
         // jhipster-needle-angularjs-add-interceptor JHipster will add new application interceptor here
         
