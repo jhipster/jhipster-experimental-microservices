@@ -9,7 +9,6 @@ elk-logstash:
   image: logstash:1.5.3
   volumes:
     - ./logstash/:/config-dir
-    - /tmp/:/log-tmp/
   command: logstash -f /config-dir/logstash.conf
   ports:
     - "5000:5000/udp"
