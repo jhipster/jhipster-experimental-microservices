@@ -16,10 +16,14 @@
         </encoder>
     </appender>-->
 
+    <springProperty name="instance_id" source="eureka.instance.appname"/>
+    <springProperty name="server_port" source="server.port"/>
+
     <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
         <syslogHost>localhost</syslogHost>
         <port>5000</port>
         <facility>AUTH</facility>
+        <suffixPattern>${HOSTNAME}:${server_port} ${instance_id} %msg%n</suffixPattern>
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">

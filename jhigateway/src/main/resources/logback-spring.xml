@@ -15,11 +15,14 @@
             <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
         </encoder>
     </appender>-->
+    <springProperty name="instance_id" source="eureka.instance.instanceId"/>
+    <springProperty name="server_port" source="server.port"/>
 
     <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
         <syslogHost>localhost</syslogHost>
         <port>5000</port>
         <facility>AUTH</facility>
+        <suffixPattern>${HOSTNAME}:${server_port} ${instance_id} [%thread] %-5level %logger{5} -%msg%n</suffixPattern>
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
