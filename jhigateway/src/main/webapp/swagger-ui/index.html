@@ -67,12 +67,9 @@
             });
 
             function addApiKeyAuthorization(){
-            
+
                 var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-CSRF-TOKEN", getCSRF(), "header");
                 window.swaggerUi.api.clientAuthorizations.add("key", apiKeyAuth);
-            
-            
-            
             }
 
             function getCSRF() {
@@ -96,6 +93,33 @@
                 }
             }
         });
+
+        var gatewayURL = window.location.origin;
+
+        //Get the swagger endpoints for all the microservices indexed by the gateway
+        var swaggerAPIs = [];
+        swaggerAPIs.push({
+            name: "Gateway",
+            path: "",
+            url: gatewayURL + "/v2/api-docs"
+        });
+        $.get(gatewayURL + "/api/gateway/routes",function(gatewayRoutes){
+            gatewayRoutes.forEach(function(route){
+                swaggerAPIs.push({
+                    name: route.serviceId,
+                    path: route.path,
+                    url: window.location.origin+route.path.replace("**","v2/api-docs")
+                });
+            });
+
+            var i = 0;
+            swaggerAPIs.forEach(function(swaggerAPI){
+                var option = $("<option>", {value: i});
+                option.append(swaggerAPI.name);
+                $("#api-select").append(option);
+                i++;
+            });
+        });
     </script>
 </head>
 
@@ -103,10 +127,31 @@
 <div id='header'>
     <div class="swagger-ui-wrap">
         <a id="logo" href="http://swagger.io">swagger</a>
+        <select id="api-select" name="APIs"></select>
     </div>
 </div>
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<script>
+    //Allow switching between available swagger API with the select box
+    //FIXME If the is Gateway API is re-selected, swagger API calls will not work because of CSRF protection
+    $("#api-select").change(function(){
+        var endpointIndex = $(this).val();
+        var swaggerEndpointPath = swaggerAPIs[endpointIndex].path;
+        var swaggerEndpointURL = swaggerAPIs[endpointIndex].url;
+
+        //Reload swagger with a different endpoint URL and a different "base path"
+        // so that Swagger API calls are made through the gateway with the correct path
+        window.swaggerUi = new SwaggerUi({
+            url: swaggerEndpointURL,
+            dom_id: "swagger-ui-container",
+            onComplete: function () {
+                window.swaggerUi.api.setBasePath(swaggerEndpointPath.replace("/**", ""));
+            }
+        });
+        window.swaggerUi.load();
+    });
+</script>
 </body>
 </html>
