@@ -18,18 +18,17 @@
     <springProperty name="instance_id" source="eureka.instance.instanceId"/>
     <springProperty name="server_port" source="server.port"/>
 
-    <appender name="SYSLOG" class="ch.qos.logback.classic.net.SyslogAppender">
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashSocketAppender">
         <syslogHost>localhost</syslogHost>
         <port>5000</port>
-        <facility>AUTH</facility>
-        <suffixPattern>${HOSTNAME}:${server_port} ${instance_id} [%thread] %-5level %logger{5} -%msg%n</suffixPattern>
+        <customFields>{"hostname":"${HOSTNAME}","server_port":"${server_port}","instance_id":"${instance_id}","pid":"${PID}"}</customFields>
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
         <queueSize>512</queueSize>
         <!--Set this in order to override the default behavior that discard non-WARN events when the queue is filling up
         <discardingThreshold>0</discardingThreshold>-->
-        <appender-ref ref="SYSLOG"/>
+        <appender-ref ref="LOGSTASH"/>
     </appender>
 
     <logger name="io.github.jhipster.gateway" level="@logback.loglevel@"/>
